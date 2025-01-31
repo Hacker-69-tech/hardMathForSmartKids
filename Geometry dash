@@ -1,0 +1,12 @@
+mport os
+
+# Replace this path with the actual path to the Geometry Dash executable
+geometry_dash_path = "C:\\Path\\To\\GeometryDash.exe"
+
+# Check if the file exists
+if os.path.exists(geometry_dash_path):
+    # Launch the executable
+    os.startfile(geometry_dash_path)
+    print("Geometry Dash is launching...")
+else:
+    print("Geometry Dash executable not found. Please check the path.")
