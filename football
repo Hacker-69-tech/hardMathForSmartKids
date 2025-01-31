@@ -1,0 +1,52 @@
+import random
+
+class Team:
+    def __init__(self, name):
+        self.name = name
+        self.score = 0
+
+    def score_touchdown(self):
+        self.score += 7
+        print(f"{self.name} scored a touchdown! Current score: {self.score}")
+
+    def score_field_goal(self):
+        self.score += 3
+        print(f"{self.name} scored a field goal! Current score: {self.score}")
+
+class Game:
+    def __init__(self, team1, team2, turns=10):
+        self.team1 = team1
+        self.team2 = team2
+        self.turns = turns
+
+    def simulate_turn(self, team):
+        action = random.choice(['touchdown', 'field_goal', 'no_score'])
+        if action == 'touchdown':
+            team.score_touchdown()
+        elif action == 'field_goal':
+            team.score_field_goal()
+        else:
+            print(f"{team.name} did not score this turn.")
+
+    def play_game(self):
+        for turn in range(self.turns):
+            print(f"\nTurn {turn + 1}")
+            self.simulate_turn(self.team1)
+            self.simulate_turn(self.team2)
+
+        self.determine_winner()
+
+    def determine_winner(self):
+        print(f"\nFinal Score:\n{self.team1.name}: {self.team1.score}\n{self.team2.name}: {self.team2.score}")
+        if self.team1.score > self.team2.score:
+            print(f"{self.team1.name} wins!")
+        elif self.team2.score > self.team1.score:
+            print(f"{self.team2.name} wins!")
+        else:
+            print("It's a tie!")
+
+# Example usage
+team1 = Team("Sharks")
+team2 = Team("Eagles")
+game = Game(team1, team2, turns=10)
+game.play_game()
