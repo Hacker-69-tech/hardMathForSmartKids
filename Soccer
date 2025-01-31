@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Soccer Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #228B22;
+        }
+        canvas {
+            border: 2px solid #000;
+            background-color: #32CD32;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="800" height="400"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Ball properties
+        const ball = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            radius: 10,
+            dx: 2,
+            dy: -2,
+            speed: 5
+        };
+
+        // Field properties
+        const field = {
+            width: canvas.width,
+            height: canvas.height
+        };
+
+        // Draw field
+        function drawField() {
+            ctx.fillStyle = '#32CD32';
+            ctx.fillRect(0, 0, field.width, field.height);
+
+            // Draw center line
+            ctx.strokeStyle = '#FFF';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(field.width / 2, 0);
+            ctx.lineTo(field.width / 2, field.height);
+            ctx.stroke();
+
+            // Draw center circle
+            ctx.beginPath();
+            ctx.arc(field.width / 2, field.height / 2, 50, 0, Math.PI * 2);
+            ctx.stroke();
+        }
+
+        // Draw ball
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#FFF';
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Update game objects
+        function update() {
+            ball.x += ball.dx * ball.speed;
+            ball.y += ball.dy * ball.speed;
+
+            // Wall collision detection
+            if (ball.x + ball.radius > canvas.width || ball.x - ball.radius < 0) {
+                ball.dx *= -1;
+            }
+            if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
+                ball.dy *= -1;
+            }
+        }
+
+        // Draw everything
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawField();
+            drawBall();
+        }
+
+        // Game loop
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Handle keyboard input
+        document.addEventListener('keydown', function(event) {
+            switch (event.key) {
+                case 'ArrowUp':
+                    ball.dy = -1;
+                    break;
+                case 'ArrowDown':
+                    ball.dy = 1;
+                    break;
+                case 'ArrowLeft':
+                    ball.dx = -1;
+                    break;
+                case 'ArrowRight':
+                    ball.dx = 1;
+                    break;
+            }
+        });
+
+        document.addEventListener('keyup', function(event) {
+            switch (event.key) {
+                case 'ArrowUp':
+                case 'ArrowDown':
+                    ball.dy = 0;
+                    break;
+                case 'ArrowLeft':
+                case 'ArrowRight':
+                    ball.dx = 0;
+                    break;
+            }
+        });
+
+        // Start the game loop
+        gameLoop();
+    </script>
+</body>
+</html>
