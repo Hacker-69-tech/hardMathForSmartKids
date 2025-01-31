@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Python Game Website</title>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        iframe { width: 800px; height: 600px; border: none; margin-top: 20px; }
+        .game-button { margin: 10px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Play Python Games in Your Browser</h1>
+    <button class="game-button" onclick="loadGame('https://retrobowlgame.com/')">Play Retro Bowl</button>
+    <button class="game-button" onclick="loadGame('https://slope-game.io/')">Play Slope</button>
+    <button class="game-button" onclick="loadGame('https://1v1.lol/')">Play 1v1.LOL</button>
+    <iframe id="gameFrame"></iframe>
+    
+    <script>
+        function loadGame(url) {
+            document.getElementById("gameFrame").src = url;
+        }
+    </script>
+</body>
+</html>
